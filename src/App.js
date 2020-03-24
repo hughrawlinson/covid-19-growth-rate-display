@@ -3,6 +3,9 @@ import { useCovidData } from './hooks/useCovidData';
 import { CountrySelector } from './components/CountrySelector';
 import Select from 'react-select';
 import { Line } from '@nivo/line';
+import { Layout, Checkbox, Form, Typography } from 'antd';
+const { Title } = Typography
+const { Content, Header, Footer } = Layout;
 
 const TALLY_TYPES = [{
   value: "confirmed",
@@ -52,59 +55,94 @@ function App() {
   }
 
   return (
-    <div className="App">
-      { covidData && (
-        <>
-        <Line
-          curve="monotoneX"
-          data={prepareData({
-            data: covidData,
-            selectedCountry,
-            selectedTallyType,
-            zeroDayMode,
-            growthRateMode
-          })}
-          {...lineConfig}
-        />
-        <CountrySelector
-          countries={covidCountries}
-          selectedCountry={selectedCountry}
-          setSelectedCountry={setSelectedCountry}
-        />
-        <Select
-          options={TALLY_TYPES}
-          value={TALLY_TYPES.find(tallyType => tallyType.value === selectedTallyType)}
-          onChange={tallyType => setSelectedTallyType(tallyType.value)}
-        />
-        Zero Day Mode
-        <input
-          type="checkbox"
-          onChange={event => {
-            !event.target.checked && setLogarithmicMode(false);
-            setZeroDayMode(event.target.checked)
-          }}
-          value={zeroDayMode}
-        />
-        Logarithmic
-        <input
-          type="checkbox"
-          disabled={!zeroDayMode}
-          onChange={event => {
-            setLogarithmicMode(event.target.checked)
-          }}
-          value={logarithmicMode}
-        />
-        Growth Rate
-        <input
-          type="checkbox"
-          onChange={event => {
-            setGrowthRateMode(event.target.checked)
-          }}
-          value={growthRateMode}
-        />
-        </>
-      )}
-    </div>
+    <Layout>
+      <Header>
+      </Header>
+      <Content>
+        <Title>{document.title}</Title>
+        { covidData && (
+          <>
+          <Line
+            curve="monotoneX"
+            data={prepareData({
+              data: covidData,
+              selectedCountry,
+              selectedTallyType,
+              zeroDayMode,
+              growthRateMode
+            })}
+            {...lineConfig}
+          />
+          <Form
+            labelCol={{span: 4}}
+            wrapperCol={{span: 8}}
+          >
+            <Form.Item
+              label="Country"
+              name="country"
+            >
+              <CountrySelector
+                countries={covidCountries}
+                selectedCountry={selectedCountry}
+                setSelectedCountry={setSelectedCountry}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Tally Type"
+              name="tally-type"
+            >
+              <Select
+                options={TALLY_TYPES}
+                value={TALLY_TYPES.find(tallyType => tallyType.value === selectedTallyType)}
+                onChange={tallyType => setSelectedTallyType(tallyType.value)}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Zero Day Mode"
+              name="zero-day-mode"
+            >
+              <Checkbox
+                onChange={event => {
+                  !event.target.checked && setLogarithmicMode(false);
+                  setZeroDayMode(event.target.checked)
+                }}
+                checked={zeroDayMode}
+              >
+                Zero Day Mode
+              </Checkbox>
+            </Form.Item>
+            <Form.Item
+              label="Logarithmic Mode"
+              name="logarithmic-mode"
+            >
+              <Checkbox
+                disabled={!zeroDayMode}
+                onChange={event => {
+                  setLogarithmicMode(event.target.checked)
+                }}
+                checked={logarithmicMode}
+              >
+                Logarithmic
+              </Checkbox>
+            </Form.Item>
+            <Form.Item
+              label="Growth Rate Mode"
+              name="growth-rate-mode"
+            >
+              <Checkbox
+                onChange={event => {
+                  setGrowthRateMode(event.target.checked)
+                }}
+                checked={growthRateMode}
+              >
+                Growth Rate
+              </Checkbox>
+            </Form.Item>
+          </Form>
+          </>
+        )}
+      </Content>
+    </Layout>
   );
 }
 
