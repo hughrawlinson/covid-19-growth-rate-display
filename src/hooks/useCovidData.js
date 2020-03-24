@@ -14,6 +14,9 @@ export function useCovidData() {
     };
   }, []);
 
-  return covidData
+  return [
+    covidData,
+    covidData ? Object.keys(covidData).sort() : null
+  ];
 }
 

@@ -1,8 +1,11 @@
 import React from 'react';
 import { useCovidData } from './hooks/useCovidData';
 import { Line } from '@nivo/line';
+
 function App() {
-  const covidData = useCovidData();
+  const [covidData, covidCountries] = useCovidData();
+  console.log(covidCountries);
+
   const lineConfig = {
     width: 900,
     height: 400,
