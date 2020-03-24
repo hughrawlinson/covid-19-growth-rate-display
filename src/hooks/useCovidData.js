@@ -1,5 +1,23 @@
 import { useState, useEffect } from 'react';
 
+function transpose(array) {
+  return array[0].map((col, i) => array.map(row => row[i]));
+}
+
+function aggregateDay(day) {
+  return day.reduce((acc, el) => ({
+    ...acc,
+    confirmed: acc.confirmed + el.confirmed,
+    deaths: acc.deaths + el.deaths,
+    recovered: acc.recovered + el.recovered,
+  }), {
+    date: day[0].date,
+    confirmed: 0,
+    deaths: 0,
+    recovered: 0,
+  });
+}
+
 export function useCovidData() {
   const COVID_DATA_URL = "https://pomber.github.io/covid19/timeseries.json";
   const [covidData, setCovidData] = useState(null);
@@ -14,9 +32,19 @@ export function useCovidData() {
     };
   }, []);
 
+  if (!covidData) {
+    return [null, null];
+  }
+
+  const Worldwide = transpose(Object.values(covidData))
+    .map(aggregateDay);
+
   return [
-    covidData,
-    covidData ? Object.keys(covidData).sort() : null
+    {
+      Worldwide,
+      ...covidData,
+    },
+    covidData ? ['Worldwide', ...Object.keys(covidData).sort()] : null
   ];
 }
 
