@@ -17,7 +17,7 @@ const TALLY_TYPES = [{
 
 function App() {
   const [covidData, covidCountries] = useCovidData();
-  const [selectedCountry, setSelectedCountry] = useState('Afghanistan');
+  const [selectedCountry, setSelectedCountry] = useState('Worldwide');
   const [selectedTallyType, setSelectedTallyType] = useState('confirmed');
   const [zeroDayMode, setZeroDayMode] = useState(false);
   const [logarithmicMode, setLogarithmicMode] = useState(false);
