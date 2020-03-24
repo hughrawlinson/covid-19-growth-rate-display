@@ -28,11 +28,12 @@ function App() {
   }, [selectedCountry, covidCountries]);
 
   const lineConfig = {
-    width: 900,
+    width: window.innerWidth - 20,
     height: 400,
     margin: { top: 20, right: 20, bottom: 60, left: 80},
     animate: true,
     enableSlices: 'x',
+    enableArea: true,
     xScale: {
       type: 'time',
       format: '%Y-%m-%d',
