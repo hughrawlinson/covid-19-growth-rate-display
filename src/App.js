@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCovidData } from './hooks/useCovidData';
+import { CountrySelector } from './components/CountrySelector';
 import { Line } from '@nivo/line';
-import Select from 'react-select';
 
 function App() {
   const [covidData, covidCountries] = useCovidData();
@@ -34,15 +34,10 @@ function App() {
           }]}
           {...lineConfig}
         />
-        <Select
-          options={covidCountries.map(country => ({value: country, label: country}))}
-          onChange={value => {
-            setSelectedCountry(value.value)
-          }}
-          value={{
-            value: selectedCountry,
-            label: selectedCountry,
-          }}
+        <CountrySelector
+          countries={covidCountries}
+          selectedCountry={selectedCountry}
+          setSelectedCountry={setSelectedCountry}
         />
         </>
       )}
