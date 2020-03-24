@@ -21,6 +21,7 @@ function App() {
   const [selectedTallyType, setSelectedTallyType] = useState('confirmed');
   const [zeroDayMode, setZeroDayMode] = useState(false);
   const [logarithmicMode, setLogarithmicMode] = useState(false);
+  const [growthRateMode, setGrowthRateMode] = useState(false);
 
   useEffect(() => {
     if (covidCountries && !selectedCountry) setSelectedCountry(covidCountries[0]);
@@ -59,7 +60,8 @@ function App() {
             data: covidData,
             selectedCountry,
             selectedTallyType,
-            zeroDayMode
+            zeroDayMode,
+            growthRateMode
           })}
           {...lineConfig}
         />
@@ -91,18 +93,44 @@ function App() {
           }}
           value={logarithmicMode}
         />
+        Growth Rate
+        <input
+          type="checkbox"
+          onChange={event => {
+            setGrowthRateMode(event.target.checked)
+          }}
+          value={growthRateMode}
+        />
         </>
       )}
     </div>
   );
 }
 
-function prepareData({data, selectedCountry, selectedTallyType, zeroDayMode}) {
+function prepareData({data, selectedCountry, selectedTallyType, zeroDayMode, growthRateMode}) {
+  function getY(datum, index) {
+    if (!growthRateMode) {
+      return datum[selectedTallyType];
+    }
+
+    if (index < 1) {
+      return 0;
+    }
+
+    const previousDay = data[selectedCountry][index - 1];
+
+    if (!previousDay) {
+      return datum[selectedTallyType];
+    }
+
+    return (datum[selectedTallyType] - (previousDay[selectedTallyType] || 0)) / (previousDay[selectedTallyType] || 1);
+  }
+
   return [{
     id: selectedCountry,
     data: data[selectedCountry].map((datum, index) => ({
       x: datum.date,
-      y: datum[selectedTallyType]
+      y: getY(datum, index)
     })).filter(({y}) => !zeroDayMode || y > 0)
   }]}
 
