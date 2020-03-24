@@ -17,6 +17,17 @@ function App() {
     margin: { top: 20, right: 20, bottom: 60, left: 80},
     animate: true,
     enableSlices: 'x',
+    xScale: {
+      type: 'time',
+      format: '%Y-%m-%d',
+      precision: 'day'
+    },
+    axisBottom: {
+      format: '%b %d',
+      tickValues: 'every 7 days',
+      legend: 'time scale',
+      legendOffset: -12
+    }
   }
 
   return (
@@ -27,8 +38,8 @@ function App() {
           curve="monotoneX"
           data={[{
             id: selectedCountry,
-            data: covidData[selectedCountry].map(({confirmed}, index) => ({
-              x: index,
+            data: covidData[selectedCountry].map(({date, confirmed}, index) => ({
+              x: date,
               y: confirmed
             }))
           }]}
