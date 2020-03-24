@@ -19,6 +19,7 @@ function App() {
   const [covidData, covidCountries] = useCovidData();
   const [selectedCountry, setSelectedCountry] = useState('Afghanistan');
   const [selectedTallyType, setSelectedTallyType] = useState('confirmed');
+  const [zeroDayMode, setZeroDayMode] = useState(false);
 
   useEffect(() => {
     if (covidCountries && !selectedCountry) setSelectedCountry(covidCountries[0]);
@@ -54,7 +55,7 @@ function App() {
             data: covidData[selectedCountry].map((datum, index) => ({
               x: datum.date,
               y: datum[selectedTallyType]
-            }))
+            })).filter(({y}) => !zeroDayMode || y > 0)
           }]}
           {...lineConfig}
         />
@@ -67,6 +68,13 @@ function App() {
           options={TALLY_TYPES}
           value={TALLY_TYPES.find(tallyType => tallyType.value === selectedTallyType)}
           onChange={tallyType => setSelectedTallyType(tallyType.value)}
+        />
+        <input
+          type="checkbox"
+          onChange={event => {
+            setZeroDayMode(event.target.value)
+          }}
+          value={zeroDayMode}
         />
         </>
       )}
