@@ -55,13 +55,12 @@ function App() {
         <>
         <Line
           curve="monotoneX"
-          data={[{
-            id: selectedCountry,
-            data: covidData[selectedCountry].map((datum, index) => ({
-              x: datum.date,
-              y: datum[selectedTallyType]
-            })).filter(({y}) => !zeroDayMode || y > 0)
-          }]}
+          data={prepareData({
+            data: covidData,
+            selectedCountry,
+            selectedTallyType,
+            zeroDayMode
+          })}
           {...lineConfig}
         />
         <CountrySelector
@@ -97,5 +96,14 @@ function App() {
     </div>
   );
 }
+
+function prepareData({data, selectedCountry, selectedTallyType, zeroDayMode}) {
+  return [{
+    id: selectedCountry,
+    data: data[selectedCountry].map((datum, index) => ({
+      x: datum.date,
+      y: datum[selectedTallyType]
+    })).filter(({y}) => !zeroDayMode || y > 0)
+  }]}
 
 export default App;
