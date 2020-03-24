@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/covid-19-growth-rate-display/precache-manifest.63daa22d1e22b7f841469b1b1587786d.js"
+  "/covid-19-growth-rate-display/precache-manifest.e3fe6f0cdaccd6095a20c402f9461caf.js"
 );
 
 self.addEventListener('message', (event) => {
