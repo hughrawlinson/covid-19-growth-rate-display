@@ -20,6 +20,7 @@ function App() {
   const [selectedCountry, setSelectedCountry] = useState('Afghanistan');
   const [selectedTallyType, setSelectedTallyType] = useState('confirmed');
   const [zeroDayMode, setZeroDayMode] = useState(false);
+  const [logarithmicMode, setLogarithmicMode] = useState(false);
 
   useEffect(() => {
     if (covidCountries && !selectedCountry) setSelectedCountry(covidCountries[0]);
@@ -36,6 +37,10 @@ function App() {
       format: '%Y-%m-%d',
       precision: 'day'
     },
+    yScale: logarithmicMode ? {
+      type: 'log',
+      base: 10,
+    } : { type: 'linear' },
     axisBottom: {
       format: '%b %d',
       tickValues: 'every 7 days',
@@ -69,12 +74,23 @@ function App() {
           value={TALLY_TYPES.find(tallyType => tallyType.value === selectedTallyType)}
           onChange={tallyType => setSelectedTallyType(tallyType.value)}
         />
+        Zero Day Mode
         <input
           type="checkbox"
           onChange={event => {
-            setZeroDayMode(event.target.value)
+            !event.target.checked && setLogarithmicMode(false);
+            setZeroDayMode(event.target.checked)
           }}
           value={zeroDayMode}
+        />
+        Logarithmic
+        <input
+          type="checkbox"
+          disabled={!zeroDayMode}
+          onChange={event => {
+            setLogarithmicMode(event.target.checked)
+          }}
+          value={logarithmicMode}
         />
         </>
       )}
