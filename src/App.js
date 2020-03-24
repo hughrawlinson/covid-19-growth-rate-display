@@ -11,8 +11,6 @@ function App() {
     enableSlices: 'x'
   }
 
-  console.log(covidData);
-
   return (
     <div className="App">
       { covidData && (
