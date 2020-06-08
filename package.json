@@ -6,7 +6,7 @@
     "@nivo/line": "^0.62.0",
     "@testing-library/jest-dom": "^5.9.0",
     "@testing-library/react": "^10.2.0",
-    "@testing-library/user-event": "^11.1.0",
+    "@testing-library/user-event": "^11.2.1",
     "antd": "^4.3.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
