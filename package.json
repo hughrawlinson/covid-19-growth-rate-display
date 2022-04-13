@@ -5,7 +5,7 @@
   "dependencies": {
     "@nivo/line": "^0.62.0",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.1.4",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.0.4",
     "antd": "^4.19.5",
     "react": "^16.14.0",
