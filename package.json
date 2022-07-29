@@ -7,7 +7,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.3.0",
-    "antd": "^4.22.1",
+    "antd": "^4.22.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-scripts": "5.0.1",
