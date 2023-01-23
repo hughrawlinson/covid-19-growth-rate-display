@@ -36,7 +36,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^5.0.0"
   },
   "homepage": "https://hughrawlinson.github.io/covid-19-growth-rate-display/"
 }
